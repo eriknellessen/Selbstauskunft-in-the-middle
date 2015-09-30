@@ -1,5 +1,7 @@
 language: c
 
+sudo: required
+
 env:
   global:
     - PREFIX=$HOME/target
@@ -8,7 +10,11 @@ compiler:
   - clang
   - gcc
 
-install:
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq help2man
+  
+install: true
 
 script:
   - make PREFIX=$PREFIX
