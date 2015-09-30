@@ -6,6 +6,8 @@ Warning: This is just proof-of-concept code and should _NOT_ be used in producti
 
 ## Building
 
+Continuous integration with Travis CI: [![Build Status](https://travis-ci.org/eriknellessen/Selbstauskunft-in-the-middle.svg?branch=master)](https://travis-ci.org/eriknellessen/Selbstauskunft-in-the-middle)
+
 ### Server
 
 To build the server part, execute the following command:
