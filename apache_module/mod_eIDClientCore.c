@@ -3,12 +3,13 @@
 #include "http_core.h"
 #include "http_protocol.h"
 #include "http_request.h"
+#include "http_config.h"
 
 #include <stdio.h>
 #include <string.h>
 #define BUFFER_SIZE 1024
 
-char Parser[] = "cat";
+char Parser[] = "";
 char eIDCCBinary[] = "";
 
 /* Define prototypes of our functions in this module */

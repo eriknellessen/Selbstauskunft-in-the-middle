@@ -24,6 +24,7 @@ eIDClientCore:
 	make
 	
 apache_module:
-	sed -i '/char eIDCCBinary\[\] = \"\";/c\char eIDCCBinary\[\] = \"'$(PREFIX)'\/bin\/Test_nPAClientLib_AutentApp\";' apache_module/mod_eIDClientCore.c
+	sed -i '/char Parser\[\] = \"\";/c\char Parser\[\] = \"python '$(PREFIX)'\/apache_module\/parser\/parser.py\";' apache_module/mod_eIDClientCore.c
+	sed -i '/char eIDCCBinary\[\] = \"\";/c\char eIDCCBinary\[\] = \"'$(PREFIX)'\/eIDClientCore\/bin\/Test_nPAClientLib_AutentApp\";' apache_module/mod_eIDClientCore.c
 	make -C apache_module
 	sudo sed -i '/APACHE_CONF_INCLUDE_FILES=\"\"/c\APACHE_CONF_INCLUDE_FILES=\"'$(PREFIX)'\/apache_module\/httpd.conf.eIDClientCore\"' /etc/sysconfig/apache2 
