@@ -4,7 +4,7 @@ PREFIX ?= $(shell pwd)
 
 .PHONY: apache_module
 
-all: virtualsmartcard eIDClientCore
+all: client server
 
 client: virtualsmartcard
 
