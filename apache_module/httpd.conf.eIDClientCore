@@ -1,9 +1,2 @@
-#LoadFile /home/nellessen/eIDCC/eIDClientCore-Test/lib64/libcrypto.so
-#LoadFile /home/nellessen/eIDCC/eIDClientCore-Test/lib64/libssl.so
-#LoadFile /home/nellessen/eIDCC/eIDClientCore-Test/lib64/libcurl.so
-#LoadFile /home/nellessen/eIDCC/eIDClientCore-Test/lib64/libeIDClientConnection.so
-#LoadFile /home/nellessen/eIDCC/eIDClientCore-Test/lib64/libeIDClientCore.so
-#LoadFile /home/nellessen/eIDCC/eIDClientCore-Test/lib64/libexpat.so
-#LoadFile /home/nellessen/eIDCC/eIDClientCore-Test/lib/libcryptopp.so
 LoadModule eIDClientCore_module /usr/lib64/apache2/mod_eIDClientCore.so
 AddHandler eidclientcore-handler .eIDClientCore
