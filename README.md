@@ -36,3 +36,17 @@ Then, start the eID procedure by executing the following command:
 ```sh
 bin/Test_nPAClientLib_AutentApp
 ```
+
+## Using the Apache module
+After building and installing the Apache module, start or restart your Apache server:
+```sh
+rcapache2 restart
+```
+Then open a page on it, which has .eIDClientCore in its name, for example http://127.0.0.1/start.eIDClientCore.html
+The eIDClientCore will then be started and the result will be shown as a webpage.
+
+##ToDo:
+* Create a data structure, in which the result is saved, so other functions (like a login etc.) can work with the data.
+* Enable configuration of module (paths to binaries)
+* Decode HTML correctly
+* Examine possibilities of automating connection establishment from the client
