@@ -46,7 +46,6 @@ Then open a page on it, which has .eIDClientCore in its name, for example http:/
 The eIDClientCore will then be started and the result will be shown as a webpage.
 
 ##ToDo:
-* Create a data structure, in which the result is saved, so other functions (like a login etc.) can work with the data.
 * Enable configuration of module (paths to binaries)
 * Decode HTML correctly
 * Examine possibilities of automating connection establishment from the client
