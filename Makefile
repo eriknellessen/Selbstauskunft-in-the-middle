@@ -4,10 +4,6 @@ PREFIX ?= $(shell pwd)
 
 CONF_FILES = /etc/sysconfig/apache2 /etc/apache2/apache2.conf
 
-CHANGED_APACHE_CONF_FILE = FALSE
-
-SUCCESS = 
-
 .PHONY: apache_module
 
 all: client server
