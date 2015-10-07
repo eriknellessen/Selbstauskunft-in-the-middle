@@ -1,2 +1,4 @@
 LoadModule eIDClientCore_module /usr/lib64/apache2/mod_eIDClientCore.so
-AddHandler eidclientcore-handler .eIDClientCore
+<Location "/eIDClientCore">
+    SetHandler eidclientcore-handler
+</Location>
