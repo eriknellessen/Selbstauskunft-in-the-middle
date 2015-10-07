@@ -47,5 +47,4 @@ The eIDClientCore will then be started and the result will be shown as a webpage
 
 ##ToDo:
 * Enable configuration of module (paths to binaries)
-* Decode HTML correctly
 * Examine possibilities of automating connection establishment from the client

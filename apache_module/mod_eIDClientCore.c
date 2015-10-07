@@ -10,8 +10,8 @@
 #include "mod_eIDClientCore.h"
 #define BUFFER_SIZE 1024
 
-char Parser[] = "";
-char eIDCCBinary[] = "";
+char eIDCCBinary[] = "/home/nellessen/Selbstauskunft/Selbstauskunft-in-the-middle-Test/eIDClientCore/bin/Test_nPAClientLib_AutentApp";
+char Parser[] = "python /home/nellessen/Selbstauskunft/Selbstauskunft-in-the-middle-Test/apache_module/parser/parser.py";
 
 /* Define prototypes of our functions in this module */
 static void register_hooks(apr_pool_t *pool);
@@ -58,6 +58,8 @@ static int eIDClientCore_handler(request_rec *r)
 	* and Apache will try somewhere else.
 	*/
 	if (!r->handler || strcmp(r->handler, "eidclientcore-handler")) return (DECLINED);
+	
+	ap_set_content_type(r, "text/plain; charset=utf-8");
 	
 	char buffer[BUFFER_SIZE];
 	char *data = NULL;
