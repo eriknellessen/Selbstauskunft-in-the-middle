@@ -42,8 +42,7 @@ After building and installing the Apache module, start or restart your Apache se
 ```sh
 rcapache2 restart
 ```
-Then open a page on it, which has .eIDClientCore in its name, for example http://127.0.0.1/start.eIDClientCore.html
-The eIDClientCore will then be started and the result will be shown as a webpage.
+Then open the page /eIDClientCore on your Apache web server. The eIDClientCore will then be started. If your first name is "Erik", the secret will be shown. If not, the result will be shown as a webpage.
 
 ##ToDo:
 * Examine possibilities of automating connection establishment from the client
