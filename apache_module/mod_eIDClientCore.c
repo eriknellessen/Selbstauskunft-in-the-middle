@@ -10,31 +10,49 @@
 #include "mod_eIDClientCore.h"
 #define BUFFER_SIZE 1024
 
-char eIDCCBinary[] = "/home/nellessen/Selbstauskunft/Selbstauskunft-in-the-middle-Test/eIDClientCore/bin/Test_nPAClientLib_AutentApp";
-char Parser[] = "python /home/nellessen/Selbstauskunft/Selbstauskunft-in-the-middle-Test/apache_module/parser/parser.py";
+static eIDClientCoreConfig config;
 
 /* Define prototypes of our functions in this module */
 static void register_hooks(apr_pool_t *pool);
 static int eIDClientCore_handler(request_rec *r);
 
+const char *eIDClientCore_set_eIDCCBinaryPath(cmd_parms *cmd, void *cfg, const char *arg)
+{
+    config.eIDCCBinaryPath = arg;
+    return NULL;
+}
+
+const char *eIDClientCore_set_parserCommand(cmd_parms *cmd, void *cfg, const char *arg)
+{
+    config.parserCommand = arg;
+    return NULL;
+}
+
+static const command_rec eIDClientCore_directives[] =
+{
+    AP_INIT_TAKE1("eIDClientCoreEIDCCBinaryPath", eIDClientCore_set_eIDCCBinaryPath, NULL, RSRC_CONF, "Set path to eIDCC test case binary,"
+    "for example AuthentApp2."),
+    AP_INIT_TAKE1("eIDClientCoreParserCommand", eIDClientCore_set_parserCommand, NULL, RSRC_CONF, "Set command for the parser,"
+    "for example \"python /path/to/parser.py\"."),
+    { NULL }
+};
+
 /* Define our module as an entity and assign a function for registering hooks  */
 
-module AP_MODULE_DECLARE_DATA   eIDClientCore_module =
+module AP_MODULE_DECLARE_DATA eIDClientCore_module =
 {
     STANDARD20_MODULE_STUFF,
     NULL,            // Per-directory configuration handler
     NULL,            // Merge handler for per-directory configurations
     NULL,            // Per-server configuration handler
     NULL,            // Merge handler for per-server configurations
-    NULL,            // Any directives we may have for httpd
+    eIDClientCore_directives,            // Any directives we may have for httpd
     register_hooks   // Our hook registering function
 };
-
 
 /* register_hooks: Adds a hook to the httpd process */
 static void register_hooks(apr_pool_t *pool) 
 {
-    
     /* Hook the request handler */
     ap_hook_handler(eIDClientCore_handler, NULL, NULL, APR_HOOK_LAST);
 }
@@ -67,7 +85,7 @@ static int eIDClientCore_handler(request_rec *r)
 	int pos = 0;
 	
 	char *cmd;
-	if(asprintf(&cmd, "%s 2>&1 | %s", eIDCCBinary, Parser) == -1)
+	if(asprintf(&cmd, "%s 2>&1 | %s", config.eIDCCBinaryPath, config.parserCommand) == -1)
 		return -1;
 	FILE *pipe = popen(cmd, "r");
 	

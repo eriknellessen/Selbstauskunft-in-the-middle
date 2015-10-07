@@ -2,3 +2,5 @@ LoadModule eIDClientCore_module /usr/lib64/apache2/mod_eIDClientCore.so
 <Location "/eIDClientCore">
     SetHandler eidclientcore-handler
 </Location>
+eIDClientCoreEIDCCBinaryPath "/home/nellessen/Selbstauskunft/Selbstauskunft-in-the-middle-Test/eIDClientCore/bin/Test_nPAClientLib_AutentApp"
+eIDClientCoreParserCommand "python /home/nellessen/Selbstauskunft/Selbstauskunft-in-the-middle-Test/apache_module/parser/parser.py"

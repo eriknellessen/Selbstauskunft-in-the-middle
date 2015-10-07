@@ -46,5 +46,4 @@ Then open a page on it, which has .eIDClientCore in its name, for example http:/
 The eIDClientCore will then be started and the result will be shown as a webpage.
 
 ##ToDo:
-* Enable configuration of module (paths to binaries)
 * Examine possibilities of automating connection establishment from the client

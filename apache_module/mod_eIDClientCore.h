@@ -13,3 +13,7 @@ typedef struct eIDInformationStruct {
 	char *residencePermit;
 } eIDInformation;
 
+typedef struct {
+    const char *eIDCCBinaryPath;
+    const char *parserCommand;
+} eIDClientCoreConfig;
