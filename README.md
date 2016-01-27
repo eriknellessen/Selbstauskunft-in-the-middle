@@ -34,7 +34,7 @@ with the correct parameters.
 
 Then, start the eID procedure by executing the following command:
 ```sh
-bin/Test_nPAClientLib_AutentApp
+bin/Start_Testcase --testcase=AutentApp
 ```
 
 ## Using the Apache module
