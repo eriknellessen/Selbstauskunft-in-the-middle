@@ -1,0 +1,60 @@
+# This file is a template, and might need editing before it works on your project.
+# To contribute improvements to CI/CD templates, please follow the Development guide at:
+# https://docs.gitlab.com/ee/development/cicd/templates.html
+# This specific template is located at:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/C++.gitlab-ci.yml
+
+# use the official gcc image, based on debian
+# can use verions as well, like gcc:5.2
+# see https://hub.docker.com/_/gcc/
+
+image: debian:buster-20220125
+
+stages:
+  - build
+  - test
+
+include:
+  - template: Code-Quality.gitlab-ci.yml
+
+before_script:
+     - apt-get update && apt-get install -y build-essential autoconf libtool pkg-config python3 python3-crypto help2man libpcsclite-dev apache2 apache2-dev subversion libwxgtk3.0-gtk3-dev libcrypto++-dev libcurl4-gnutls-dev expat git gengetopt libqrencode-dev wget
+
+build:
+  stage: build
+  script:
+    - export PREFIX=$PWD
+    - export CONF_FILES="/etc/sysconfig/apache2 /etc/apache2/apache2.conf"
+    - git submodule update --init --recursive
+    - cd vsmartcard/virtualsmartcard
+    - autoreconf --verbose --install
+    - ./configure --sysconfdir=/etc
+    - make
+    - make install
+    - cd -
+    - cd eIDClientCore
+    - export PREFIX=$PWD
+    - make asn1c
+    - make openssl
+    - make eIDClient
+    - cd -
+    - export PREFIX=$PWD
+    - sed -i '/eIDClientCoreEIDCCBinaryPath \"\"/c\eIDClientCoreEIDCCBinaryPath \"'$PREFIX'\/eIDClientCore\/bin\/Test_nPAClientLib_AutentApp\"' apache_module/httpd.conf.eIDClientCore
+    - sed -i '/eIDClientCoreParserCommand \"\"/c\eIDClientCoreParserCommand \"python '$PREFIX'\/apache_module\/parser\/parser.py\"' apache_module/httpd.conf.eIDClientCore
+    - make -C apache_module
+    - for f in $CONF_FILES; do sed -i '/^APACHE_CONF_INCLUDE_FILES=\"\"/c\APACHE_CONF_INCLUDE_FILES=\"'$PREFIX'    \/apache_module\/httpd.conf.eIDClientCore\"' $f || echo Nevermind; done
+  artifacts:
+    paths:
+      - eIDClientCore/bin/SimpleClient
+      - eIDClientCore/bin/Start_Testcase
+      - apache_module/.libs/mod_eIDClientCore.so
+
+code_quality:
+  before_script:
+    - ''
+  stage: test
+  variables:
+    REPORT_FORMAT: html
+  artifacts:
+    paths: 
+      - gl-code-quality-report.html
