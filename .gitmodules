@@ -1,0 +1,6 @@
+[submodule "eIDClientCore"]
+	path = eIDClientCore
+	url = https://github.com/eriknellessen/eIDClientCore.git
+[submodule "vsmartcard"]
+	path = vsmartcard
+	url = https://github.com/frankmorgner/vsmartcard.git
