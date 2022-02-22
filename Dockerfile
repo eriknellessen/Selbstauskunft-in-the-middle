@@ -8,7 +8,7 @@ RUN apt-get install -y build-essential autoconf libtool pkg-config python3 pytho
 
 RUN git clone https://gitlab.com/eriknellessen/Selbstauskunft-in-the-middle.git
 WORKDIR /Selbstauskunft-in-the-middle
-RUN git checkout 99067f9acae0d3f11f97e8fa7a712c8a92beded5
+RUN git checkout 67967de8453f83c0304c7fb5dfcada61906cb04d
 
 ENV PREFIX=/Selbstauskunft-in-the-middle/
 ENV CONF_FILES="/etc/sysconfig/apache2 /etc/apache2/apache2.conf"
