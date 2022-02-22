@@ -25,10 +25,11 @@ RUN make openssl
 RUN make eIDClient
 WORKDIR /Selbstauskunft-in-the-middle
 ENV PREFIX=/Selbstauskunft-in-the-middle/
-RUN sed -i '/eIDClientCoreEIDCCBinaryPath \"\"/c\eIDClientCoreEIDCCBinaryPath \"'$PREFIX'\/eIDClientCore\/bin\/Test_nPAClientLib_AutentApp\"' apache_module/httpd.conf.eIDClientCore
+RUN sed -i '/eIDClientCoreEIDCCBinaryPath \"\"/c\eIDClientCoreEIDCCBinaryPath \"'$PREFIX'\/eIDClientCore\/bin\/Start_Testcase --testcase=AutentApp\"' apache_module/httpd.conf.eIDClientCore
 RUN sed -i '/eIDClientCoreParserCommand \"\"/c\eIDClientCoreParserCommand \"python '$PREFIX'\/apache_module\/parser\/parser.py\"' apache_module/httpd.conf.eIDClientCore
+RUN sed -i '/eIDClientCoreEIDCCLibraryPath \"\"/c\eIDClientCoreEIDCCLibraryPath \"'$PREFIX'\/eIDClientCore\/lib/\"' apache_module/httpd.conf.eIDClientCore
 RUN make -C apache_module
-RUN for f in $CONF_FILES; do sed -i '/^APACHE_CONF_INCLUDE_FILES=\"\"/c\APACHE_CONF_INCLUDE_FILES=\"'$PREFIX'    \/apache_module\/httpd.conf.eIDClientCore\"' $f || echo Nevermind; done
+RUN for f in $CONF_FILES; do echo "Include $PREFIX/apache_module/httpd.conf.eIDClientCore" >> $f || echo Nevermind; done
 RUN sed -i 's/Listen 80/Listen 4444/g' /etc/apache2/ports.conf
 RUN sed -i 's/<VirtualHost *:80>/<VirtualHost *:4444>/g' /etc/apache2/sites-enabled/000-default.conf
 

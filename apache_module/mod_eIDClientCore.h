@@ -16,4 +16,5 @@ typedef struct eIDInformationStruct {
 typedef struct {
     const char *eIDCCBinaryPath;
     const char *parserCommand;
+    const char *eIDCCLibraryPath;
 } eIDClientCoreConfig;
