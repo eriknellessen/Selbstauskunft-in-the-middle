@@ -4,7 +4,7 @@ PREFIX ?= $(shell pwd)
 
 CONF_FILES = /etc/sysconfig/apache2 /etc/apache2/apache2.conf
 
-.PHONY: apache_module
+.PHONY: apache_module eIDClientCore
 
 all: client server
 
@@ -13,7 +13,7 @@ client: virtualsmartcard
 server: virtualsmartcard eIDClientCore apache_module
 
 virtualsmartcard:
-	git clone https://github.com/frankmorgner/vsmartcard.git
+	git submodule update --init --recursive
 	cd vsmartcard/virtualsmartcard ;\
 	autoreconf --verbose --install ;\
 	./configure --sysconfdir=/etc ;\
@@ -21,7 +21,7 @@ virtualsmartcard:
 	sudo make install
 
 eIDClientCore:
-	git clone https://github.com/BeID-lab/eIDClientCore.git
+	git submodule update --init --recursive
 	cd eIDClientCore ;\
 	make
 	

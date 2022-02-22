@@ -6,7 +6,7 @@ Warning: This is just proof-of-concept code and should _NOT_ be used in producti
 
 ## Building
 
-Continuous integration with Travis CI: [![Build Status](https://travis-ci.org/eriknellessen/Selbstauskunft-in-the-middle.svg?branch=master)](https://travis-ci.org/eriknellessen/Selbstauskunft-in-the-middle)
+[![Build Status](https://gitlab.com/eriknellessen/Selbstauskunft-in-the-middle/badges/master/pipeline.svg)](https://gitlab.com/eriknellessen/Selbstauskunft-in-the-middle/-/pipelines?ref=master)[![Code Quality](https://img.shields.io/badge/code%20quality-download%20report-blue)](https://gitlab.com/api/v4/projects/15583774/jobs/artifacts/master/download?job=code_quality)
 
 ### Server
 
