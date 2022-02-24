@@ -4,7 +4,7 @@ FROM debian:buster-20220125
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update
-RUN apt-get install -y build-essential autoconf libtool pkg-config python3 python3-crypto python3-pyscard help2man libpcsclite-dev apache2 apache2-dev subversion libwxgtk3.0-gtk3-dev libcrypto++-dev libcurl4-gnutls-dev expat git gengetopt libqrencode-dev wget pcscd pcsc-tools net-tools tshark vim
+RUN apt-get install -y build-essential autoconf libtool pkg-config python3 python3-crypto python3-pyscard help2man libpcsclite-dev apache2 apache2-dev subversion libwxgtk3.0-gtk3-dev libcrypto++-dev expat git gengetopt libqrencode-dev wget pcscd pcsc-tools net-tools tshark vim
 
 RUN git clone https://gitlab.com/eriknellessen/Selbstauskunft-in-the-middle.git
 WORKDIR /Selbstauskunft-in-the-middle
@@ -22,6 +22,7 @@ WORKDIR /Selbstauskunft-in-the-middle/eIDClientCore
 ENV PREFIX=/Selbstauskunft-in-the-middle/eIDClientCore
 RUN make asn1c
 RUN make openssl
+RUN make libcurl
 RUN make eIDClient
 WORKDIR /Selbstauskunft-in-the-middle
 ENV PREFIX=/Selbstauskunft-in-the-middle/
