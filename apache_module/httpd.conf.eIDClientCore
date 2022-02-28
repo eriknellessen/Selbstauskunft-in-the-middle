@@ -4,3 +4,4 @@ LoadModule eIDClientCore_module /usr/lib64/apache2/mod_eIDClientCore.so
 </Location>
 eIDClientCoreEIDCCBinaryPath ""
 eIDClientCoreParserCommand ""
+eIDClientCoreEIDCCLibraryPath ""

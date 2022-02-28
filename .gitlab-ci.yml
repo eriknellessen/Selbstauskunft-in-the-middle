@@ -18,7 +18,7 @@ include:
   - template: Code-Quality.gitlab-ci.yml
 
 before_script:
-     - apt-get update && apt-get install -y build-essential autoconf libtool pkg-config python3 python3-crypto help2man libpcsclite-dev apache2 apache2-dev subversion libwxgtk3.0-gtk3-dev libcrypto++-dev libcurl4-gnutls-dev expat git gengetopt libqrencode-dev wget
+     - apt-get update && apt-get install -y build-essential autoconf libtool pkg-config python3 python3-crypto help2man libpcsclite-dev apache2 apache2-dev subversion libwxgtk3.0-gtk3-dev libcrypto++-dev expat git gengetopt libqrencode-dev wget
 
 build:
   stage: build
@@ -36,18 +36,24 @@ build:
     - export PREFIX=$PWD
     - make asn1c
     - make openssl
+    - make libcurl
     - make eIDClient
     - cd -
     - export PREFIX=$PWD
     - sed -i '/eIDClientCoreEIDCCBinaryPath \"\"/c\eIDClientCoreEIDCCBinaryPath \"'$PREFIX'\/eIDClientCore\/bin\/Test_nPAClientLib_AutentApp\"' apache_module/httpd.conf.eIDClientCore
     - sed -i '/eIDClientCoreParserCommand \"\"/c\eIDClientCoreParserCommand \"python '$PREFIX'\/apache_module\/parser\/parser.py\"' apache_module/httpd.conf.eIDClientCore
+    - sed -i '/eIDClientCoreEIDCCLibraryPath \"\"/c\eIDClientCoreEIDCCLibraryPath \"'$PREFIX'\/eIDClientCore\/lib/\"' apache_module/httpd.conf.eIDClientCore
     - make -C apache_module
-    - for f in $CONF_FILES; do sed -i '/^APACHE_CONF_INCLUDE_FILES=\"\"/c\APACHE_CONF_INCLUDE_FILES=\"'$PREFIX'    \/apache_module\/httpd.conf.eIDClientCore\"' $f || echo Nevermind; done
+    - for f in $CONF_FILES; do echo "Include $PREFIX/apache_module/httpd.conf.eIDClientCore" >> $f || echo Nevermind; done
+    - cp apache_module/selbstauskunft-in-the-middle-example.html /var/www/html/index.html
   artifacts:
     paths:
       - eIDClientCore/bin/SimpleClient
       - eIDClientCore/bin/Start_Testcase
+      - eIDClientCore/lib/
       - apache_module/.libs/mod_eIDClientCore.so
+      - apache_module/httpd.conf.eIDClientCore
+      - /etc/apache2/apache2.conf
 
 code_quality:
   before_script:

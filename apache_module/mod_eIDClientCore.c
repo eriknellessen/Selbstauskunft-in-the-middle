@@ -28,12 +28,20 @@ const char *eIDClientCore_set_parserCommand(cmd_parms *cmd, void *cfg, const cha
     return NULL;
 }
 
+const char *eIDClientCore_set_eIDCCLibraryPath(cmd_parms *cmd, void *cfg, const char *arg)
+{
+    config.eIDCCLibraryPath = arg;
+    return NULL;
+}
+
 static const command_rec eIDClientCore_directives[] =
 {
     AP_INIT_TAKE1("eIDClientCoreEIDCCBinaryPath", eIDClientCore_set_eIDCCBinaryPath, NULL, RSRC_CONF, "Set path to eIDCC test case binary,"
     "for example AuthentApp2."),
     AP_INIT_TAKE1("eIDClientCoreParserCommand", eIDClientCore_set_parserCommand, NULL, RSRC_CONF, "Set command for the parser,"
     "for example \"python /path/to/parser.py\"."),
+    AP_INIT_TAKE1("eIDClientCoreEIDCCLibraryPath", eIDClientCore_set_eIDCCLibraryPath, NULL, RSRC_CONF, "Set path to eIDCC library directory,"
+    "for example ./Selbstauskunft-in-the-middle/eIDClientCore/lib"),
     { NULL }
 };
 
@@ -85,7 +93,7 @@ static int eIDClientCore_handler(request_rec *r)
 	int pos = 0;
 	
 	char *cmd;
-	if(asprintf(&cmd, "%s 2>&1 | %s", config.eIDCCBinaryPath, config.parserCommand) == -1)
+	if(asprintf(&cmd, "LD_LIBRARY_PATH=%s:$LD_LIBRARY_PATH %s 2>&1 | %s", config.eIDCCLibraryPath, config.eIDCCBinaryPath, config.parserCommand) == -1)
 		return -1;
 	FILE *pipe = popen(cmd, "r");
 	
