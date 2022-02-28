@@ -45,6 +45,7 @@ build:
     - sed -i '/eIDClientCoreEIDCCLibraryPath \"\"/c\eIDClientCoreEIDCCLibraryPath \"'$PREFIX'\/eIDClientCore\/lib/\"' apache_module/httpd.conf.eIDClientCore
     - make -C apache_module
     - for f in $CONF_FILES; do echo "Include $PREFIX/apache_module/httpd.conf.eIDClientCore" >> $f || echo Nevermind; done
+    - cp apache_module/selbstauskunft-in-the-middle-example.html /var/www/html/index.html
   artifacts:
     paths:
       - eIDClientCore/bin/SimpleClient

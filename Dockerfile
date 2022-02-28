@@ -8,7 +8,7 @@ RUN apt-get install -y build-essential autoconf libtool pkg-config python3 pytho
 
 RUN git clone https://gitlab.com/eriknellessen/Selbstauskunft-in-the-middle.git
 WORKDIR /Selbstauskunft-in-the-middle
-RUN git checkout 4cab604f9354d2122b840bf5a7bf4910172a5cc2
+RUN git checkout 5671f7d5bc0835033e3df10bb502215ed87fe734
 
 ENV PREFIX=/Selbstauskunft-in-the-middle/
 ENV CONF_FILES="/etc/sysconfig/apache2 /etc/apache2/apache2.conf"
@@ -33,6 +33,7 @@ RUN make -C apache_module
 RUN for f in $CONF_FILES; do echo "Include $PREFIX/apache_module/httpd.conf.eIDClientCore" >> $f || echo Nevermind; done
 RUN sed -i 's/Listen 80/Listen 4444/g' /etc/apache2/ports.conf
 RUN sed -i 's/<VirtualHost *:80>/<VirtualHost *:4444>/g' /etc/apache2/sites-enabled/000-default.conf
+COPY apache_module/selbstauskunft-in-the-middle-example.html /var/www/html/index.html
 
 COPY run.sh /usr/local/bin/run.sh
 RUN chmod 755 /usr/local/bin/run.sh
